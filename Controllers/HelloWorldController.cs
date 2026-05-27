@@ -1,10 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using MvcMovie.Models;
+using MvcMovie.Data;
+using System.Linq;
 
 namespace MvcMovie.Controllers;
 
 public class HelloWorldController : Controller
 {
+    private readonly MvcMovieContext _context;
+
+    public HelloWorldController(MvcMovieContext context)
+    {
+        _context = context;
+    }
+
     // GET: Movies
     public async Task<IActionResult> Index(string movieGenre, string searchString)
     {
@@ -38,6 +49,7 @@ public class HelloWorldController : Controller
 
         return View(movieGenreVM);
     }
+
     public IActionResult Welcome(string name, int numTimes = 1)
     {
         ViewData["Message"] = "Hello " + name;
